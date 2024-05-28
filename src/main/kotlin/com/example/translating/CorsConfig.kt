@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class CorsConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/api/**")
-            .allowedOrigins("*")
+            .allowedOrigins("https://mvpavlyk.github.io")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("Content-Type", "Accept", "X-Requested-With", "x-customer-header-1", "x-customer-header-2", "Access-Control-Allow-Origin")
             .allowCredentials(true)
