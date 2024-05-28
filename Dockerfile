@@ -1,4 +1,4 @@
-FROM maven:3.9.5-openjdk:17-oracle AS builder
+FROM maven:3.9.5-openjdk-17 AS builder
 WORKDIR /build
 COPY pom.xml .
 RUN mvn dependency:go-offline
