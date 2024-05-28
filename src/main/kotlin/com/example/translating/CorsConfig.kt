@@ -11,6 +11,8 @@ class CorsConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/api/**")
             .allowedOrigins("*")
+            .allowedOrigins("http://localhost:63342")
+            .allowedOrigins("https://mvpavlyk.github.io/Translator-front")
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("Content-Type", "Accept", "X-Requested-With", "x-customer-header-1", "x-customer-header-2", "Access-Control-Allow-Origin")
             .allowCredentials(true)
