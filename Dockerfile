@@ -8,5 +8,5 @@ RUN mvn clean package -DskipTests
 # Use openjdk:17-oracle for the final image
 FROM openjdk:17-oracle
 WORKDIR /app
-COPY --from=builder /build/target/translating-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=builder /build/target/Translating-0.0.1-SNAPSHOT.jar /app/app.jar
 CMD ["java", "-jar", "/app/app.jar"]
