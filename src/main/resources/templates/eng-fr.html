@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dictionary</title>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Roboto&display=swap&subset=cyrillic"
+          rel="stylesheet"
+  />
+  <style>
+    body {
+      background-color: #FFF0F5;
+      margin: 0;
+      font-family: "Libre Baskerville", serif;
+    }
+    .header {
+      width: 100%;
+      height: 100px;
+      background-color: #C71585;
+      display: flex;
+      justify-content: space-between;
+    }
+    h1 {
+      margin: 0;
+      color: #e3fef7;
+      font-size: 36px;
+      margin-left: 200px;
+      margin-top: 20px;
+    }
+    /* The switch - the box around the slider */
+    .switch {
+      font-size: 17px;
+      position: relative;
+      display: inline-block;
+      width: 3.5em;
+      height: 2em;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+     /* The slider */
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        inset: 0;
+        background: #FFF0F5;
+        border-radius: 50px;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 1.4em;
+        width: 1.4em;
+        left: 0.3em;
+        bottom: 0.3em;
+        background-color: #DA70D6;
+        border-radius: 50px;
+        box-shadow: 0 0px 20px rgba(0, 0, 0, 0.4);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+    .switch input:checked + .slider {
+      background: #003c43;
+    }
+
+    .switch input:focus + .slider {
+      box-shadow: 0 0 1px #003c43;
+    }
+
+    .switch input:checked + .slider:before {
+      transform: translateX(1.6em);
+      width: 2em;
+      height: 4em;
+      bottom: 0;
+    }
+    .toggle {
+      display: flex;
+      flex-direction: row;
+      margin-right: 200px;
+      margin-top: 30px;
+      gap: 16px;
+      color: #fff;
+      font-size: 24px;
+      align-items: flex-start;
+    }
+
+    .toggle > p {
+      margin: 0;
+    }
+
+    #word-input {
+      border: 1px solid #DA70D6;
+      border-radius: 16px;
+      padding: 32px 64px 32px;
+      font-size: 20px;
+      background-color: #fff;
+      width: 600px;
+      font-family: "Libre Baskerville", serif;
+    }
+
+    #send-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 8px 16px 8px;
+      width: 110px;
+      font-size: 16px;
+      background-color: #DA70D6;
+      color: #fff;
+      font-family: "Libre Baskerville", serif;
+    }
+
+    #send-btn:hover {
+      background-color: #DA70D6;
+    }
+
+    .inp {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 145px;
+    }
+    #res {
+        margin-top: 30px;
+        font-family: "Libre Baskerville", serif;
+        color: #003c43;
+        font-size: 32px;
+        align-items: center;
+        display: flex;
+      }
+    .main-part {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .horizontal-line {
+      border-top: 1.5px solid #003c43;
+      margin: 5px 0;
+    }
+    .language-challenge {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 16px;
+            border: 1px solid #DA70D6;
+            width: 600px;
+            font-family: "Libre Baskerville", serif;
+        }
+        .language-challenge h2 {
+            margin-top: 0;
+            color: #C71585;
+            font-size: 24px;
+        }
+        .language-challenge p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .language-challenge .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .language-challenge .options button {
+            background-color: #DA70D6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: "Libre Baskerville", serif;
+        }
+        .language-challenge .options button:hover {
+            background-color: #C71585;
+        }
+  </style>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+          rel="stylesheet"
+  />
+</head>
+<body>
+<section class="header">
+  <h1>Dictionary
+    <span class="flags">
+      <span>🇬🇧</span>
+      <span>🇫🇷</span>
+    </span>
+  </h1>
+  <div class="toggle">
+    <p>Eng-Fr</p>
+    <label class="switch">
+      <input type="checkbox" id="toggleSwitch" />
+      <span class="slider"></span>
+    </label>
+    <p>Fr-Eng</p>
+  </div>
+</section>
+<section class="main-part">
+  <div class="inp">
+    <input lang="en" type="text" id="word-input" />
+    <button type="submit" id="send-btn" lang="fr">Translate</button>
+    <datalist id="suggestions"></datalist>
+  </div>
+  <div class="res" id="res"></div>
+  <div class="language-challenge">
+    <h2>Language Challenge</h2>
+    <p>Translate the following phrase:</p>
+    <p id="challenge-phrase">Good morning</p>
+    <div class="options">
+      <button onclick="checkAnswer('Bonjour')">Bonjour</button>
+      <button onclick="checkAnswer('Bonsoir')">Bonsoir</button>
+      <button onclick="checkAnswer('Bonne nuit')">Bonne nuit</button>
+    </div>
+    <p id="challenge-result"></p>
+  </div>
+</section>
+<section class="footer"></section>
+<script>
+  var switchState = localStorage.getItem("toggleSwitchState");
+  if (switchState === "on") {
+    document.getElementById("toggleSwitch").checked = true;
+  }
+  document
+    .getElementById("toggleSwitch")
+    .addEventListener("change", function () {
+      if (this.checked) {
+        localStorage.setItem("toggleSwitchState", "on");
+      } else {
+        localStorage.removeItem("toggleSwitchState");
+      }
+      window.location.href = "fr-eng.html";
+    });
+
+  var enteredWordsEng =
+    JSON.parse(localStorage.getItem("enteredWordsEng")) || [];
+  var inputField = document.getElementById("word-input");
+
+  function saveWord() {
+    var word = inputField.value.trim();
+    if (word !== "" && !enteredWordsEng.includes(word)) {
+      enteredWordsEng.push(word);
+      localStorage.setItem(
+        "enteredWordsEng",
+        JSON.stringify(enteredWordsEng)
+      );
+    }
+    inputField.value = "";
+  }
+
+  function updateSuggestions() {
+    var text = inputField.value.trim().toLowerCase();
+    fetch(`http://localhost:8080/api/dictionary/search/english/${text}`)
+      .then((response) => response.json())
+      .then((enteredWords) => {
+        console.log(enteredWords);
+        var filteredWords = enteredWords.filter(function (word) {
+          return word.toLowerCase().startsWith(text);
+        });
+
+        var suggestions = filteredWords.map(function (word) {
+          return '<option value="' + word + '">';
+        });
+
+        inputField.setAttribute("list", "suggestions");
+        document.getElementById("suggestions").innerHTML =
+          suggestions.join("");
+      })
+      .catch((error) => {
+        console.error("Error fetching entered words:", error);
+      });
+  }
+
+  document
+    .getElementById("send-btn")
+    .addEventListener("click", function () {
+      //saveWord();
+      translateWord();
+    });
+
+  inputField.addEventListener("input", function () {
+    updateSuggestions();
+  });
+
+  // window.addEventListener('load', function() {
+  //     updateSuggestions();
+  // });
+
+  function translateWord() {
+    var inputWord = inputField.value.trim().toLowerCase();
+    var translationResult = document.querySelectorAll(".res");
+    //var horizontalLines = document.querySelectorAll('.horizontal-line');
+
+    // Виконуємо запит до сервера для отримання перекладу слова
+    fetch(
+      `http://localhost:8080/api/dictionary/translate/english/${inputWord}`
+    )
+      .then((response) => response.json()) // Використовуємо .json() для отримання JSON-об'єкта
+      .then((data) => {
+        console.log(data);
+
+        // Отримуємо переклад з об'єкта
+        var translation = data[0].translations[0].text;
+
+        // Приховуємо всі результати перекладу та лінії
+        translationResult.forEach((element) => {
+          element.style.display = "none";
+        });
+        // horizontalLines.forEach(element => {
+        //     element.style.display = 'none';
+        // });
+
+        // Виводимо результат перекладу
+        if (translation) {
+          translationResult[0].textContent = translation;
+          translationResult[0].style.display = "block";
+          //horizontalLines[0].style.display = 'block';
+        }
+      })
+      .catch((error) => {
+        console.error("Translation failed:", error);
+      });
+  }
+
+  const phrases = [
+    { phrase: "Good morning", translation: "Bonjour" },
+    { phrase: "Good night", translation: "Bonne nuit" },
+    { phrase: "Good evening", translation: "Bonsoir" },
+    { phrase: "Thank you", translation: "Merci" },
+    { phrase: "Please", translation: "S'il vous plaît" }
+  ];
+
+  function showRandomPhrase() {
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    const randomPhrase = phrases[randomIndex];
+    document.getElementById("challenge-phrase").textContent = randomPhrase.phrase;
+
+    const options = document.querySelector(".language-challenge .options");
+    options.innerHTML = '';
+
+    const shuffledTranslations = phrases
+      .map(p => p.translation)
+      .sort(() => Math.random() - 0.5);
+
+    shuffledTranslations.forEach(translation => {
+      const button = document.createElement("button");
+      button.textContent = translation;
+      button.onclick = () => checkAnswer(translation);
+      options.appendChild(button);
+    });
+  }
+
+  function checkAnswer(answer) {
+    const challengePhrase = document.getElementById("challenge-phrase").textContent;
+    const correctAnswer = phrases.find(p => p.phrase === challengePhrase).translation;
+    const resultElement = document.getElementById('challenge-result');
+    if (answer === correctAnswer) {
+      resultElement.textContent = 'Correct!';
+      resultElement.style.color = 'green';
+      showRandomPhrase();
+    } else {
+      resultElement.textContent = 'Try again!';
+      resultElement.style.color = 'red';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    showRandomPhrase();
+  });
+</script>
+</body>
+</html>
